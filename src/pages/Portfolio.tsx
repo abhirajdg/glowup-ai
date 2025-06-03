@@ -16,8 +16,7 @@ import Button from '../components/ui/Button';
 import Card, { CardHeader, CardContent, CardFooter } from '../components/ui/Card';
 import Input from '../components/ui/Input';
 import Textarea from '../components/ui/Textarea';
-import { PDFDownloadLink } from '@react-pdf/renderer';
-import BrandingGuidelinePDF from '../components/portfolio/BrandingGuidelinePDF';
+import { generatePDF } from '../components/portfolio/BrandingGuidelinePDF';
 import { generateBrandingGuidelines } from '../lib/openai';
 
 const Portfolio: React.FC = () => {
@@ -374,19 +373,23 @@ const Portfolio: React.FC = () => {
                 >
                   Start Over
                 </Button>
-                <PDFDownloadLink
-                  document={<BrandingGuidelinePDF data={brandingData} />}
-                  fileName="personal-branding-guidelines.pdf"
+                <Button
+                  variant="primary"
+                  icon={<Download size={16} />}
+                  onClick={async () => {
+                    const blob = await generatePDF(brandingData);
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = 'personal-branding-guidelines.pdf';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(url);
+                  }}
                 >
-                  {({ loading }) => (
-                    <Button
-                      variant="primary"
-                      icon={loading ? <Loader className="animate-spin" /> : <Download size={16} />}
-                    >
-                      {loading ? 'Preparing PDF...' : 'Download Guidelines'}
-                    </Button>
-                  )}
-                </PDFDownloadLink>
+                  Download Guidelines
+                </Button>
               </CardFooter>
             </Card>
           </div>
