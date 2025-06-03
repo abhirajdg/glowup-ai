@@ -72,7 +72,7 @@ interface BrandingGuidelinePDFProps {
 const BrandingGuidelinePDF: React.FC<BrandingGuidelinePDFProps> = ({ data }) => {
   const MyDocument = (
     <Document>
-      <Page size="A4" style={styles.page}>
+      <Page size="A4\" style={styles.page}>
         <View style={styles.section}>
           <Text style={styles.title}>Personal Branding Guidelines</Text>
         </View>
