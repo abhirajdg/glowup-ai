@@ -3,7 +3,7 @@
 > From “who dis?” to “you’re hired.”  
 > ✨ AI-powered personal branding, portfolios, résumés, and interview prep — all in one place.
 
-🔗 **Live Demo:** [GlowUp.AI on Netlify](https://spiffy-cannoli-3d9524.netlify.app)
+🔗 **Live Demo:** [GlowUp.AI](https://spiffy-cannoli-3d9524.netlify.app)
 
 ---
 
