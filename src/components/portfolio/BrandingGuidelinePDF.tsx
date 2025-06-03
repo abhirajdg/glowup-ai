@@ -1,10 +1,19 @@
 import React from 'react';
-import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet, Font, pdf } from '@react-pdf/renderer';
+
+// Register fonts
+Font.register({
+  family: 'Inter',
+  fonts: [
+    { src: 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2', fontWeight: 400 },
+    { src: 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fAZ9hiA.woff2', fontWeight: 700 }
+  ]
+});
 
 const styles = StyleSheet.create({
   page: {
     padding: 30,
-    fontFamily: 'Helvetica'
+    fontFamily: 'Inter'
   },
   section: {
     marginBottom: 20
@@ -60,85 +69,93 @@ interface BrandingGuidelinePDFProps {
   data: any;
 }
 
-const BrandingGuidelinePDF: React.FC<BrandingGuidelinePDFProps> = ({ data }) => (
-  <Document>
-    <Page size="A4" style={styles.page}>
-      <View style={styles.section}>
-        <Text style={styles.title}>Personal Branding Guidelines</Text>
-      </View>
+const BrandingGuidelinePDF: React.FC<BrandingGuidelinePDFProps> = ({ data }) => {
+  const MyDocument = (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Text style={styles.title}>Personal Branding Guidelines</Text>
+        </View>
 
-      <View style={styles.section}>
-        <Text style={styles.heading}>Target Audience Personas</Text>
-        {data.audiencePersonas.map((persona: any, index: number) => (
-          <View key={index} style={{ marginBottom: 15 }}>
-            <Text style={styles.subheading}>{persona.title}</Text>
-            <Text style={styles.text}>{persona.description}</Text>
-            <View style={styles.tagContainer}>
-              {persona.interests.map((interest: string, i: number) => (
-                <Text key={i} style={styles.tag}>{interest}</Text>
-              ))}
+        <View style={styles.section}>
+          <Text style={styles.heading}>Target Audience Personas</Text>
+          {data.audiencePersonas.map((persona: any, index: number) => (
+            <View key={index} style={{ marginBottom: 15 }}>
+              <Text style={styles.subheading}>{persona.title}</Text>
+              <Text style={styles.text}>{persona.description}</Text>
+              <View style={styles.tagContainer}>
+                {persona.interests.map((interest: string, i: number) => (
+                  <Text key={i} style={styles.tag}>{interest}</Text>
+                ))}
+              </View>
             </View>
-          </View>
-        ))}
-      </View>
-
-      <View style={styles.section}>
-        <Text style={styles.heading}>Content Strategy</Text>
-        <Text style={styles.subheading}>Recommended Topics</Text>
-        <View style={styles.list}>
-          {data.contentStrategy.topics.map((topic: string, index: number) => (
-            <Text key={index} style={styles.listItem}>• {topic}</Text>
           ))}
         </View>
 
-        <Text style={styles.subheading}>Content Formats</Text>
-        {data.contentStrategy.formats.map((format: any, index: number) => (
-          <View key={index} style={{ marginBottom: 10 }}>
-            <Text style={styles.text}>{format.type}</Text>
-            <Text style={styles.text}>Frequency: {format.frequency}</Text>
-            <View style={styles.tagContainer}>
-              {format.platforms.map((platform: string, i: number) => (
-                <Text key={i} style={styles.tag}>{platform}</Text>
-              ))}
+        <View style={styles.section}>
+          <Text style={styles.heading}>Content Strategy</Text>
+          <Text style={styles.subheading}>Recommended Topics</Text>
+          <View style={styles.list}>
+            {data.contentStrategy.topics.map((topic: string, index: number) => (
+              <Text key={index} style={styles.listItem}>• {topic}</Text>
+            ))}
+          </View>
+
+          <Text style={styles.subheading}>Content Formats</Text>
+          {data.contentStrategy.formats.map((format: any, index: number) => (
+            <View key={index} style={{ marginBottom: 10 }}>
+              <Text style={styles.text}>{format.type}</Text>
+              <Text style={styles.text}>Frequency: {format.frequency}</Text>
+              <View style={styles.tagContainer}>
+                {format.platforms.map((platform: string, i: number) => (
+                  <Text key={i} style={styles.tag}>{platform}</Text>
+                ))}
+              </View>
             </View>
+          ))}
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.heading}>Profile Optimization</Text>
+          <Text style={styles.subheading}>Recommended Headline</Text>
+          <Text style={styles.text}>{data.profileOptimization.headline}</Text>
+
+          <Text style={styles.subheading}>Professional Summary</Text>
+          <Text style={styles.text}>{data.profileOptimization.summary}</Text>
+
+          <Text style={styles.subheading}>Keywords to Include</Text>
+          <View style={styles.tagContainer}>
+            {data.profileOptimization.keywords.map((keyword: string, index: number) => (
+              <Text key={index} style={styles.tag}>{keyword}</Text>
+            ))}
           </View>
-        ))}
-      </View>
-
-      <View style={styles.section}>
-        <Text style={styles.heading}>Profile Optimization</Text>
-        <Text style={styles.subheading}>Recommended Headline</Text>
-        <Text style={styles.text}>{data.profileOptimization.headline}</Text>
-
-        <Text style={styles.subheading}>Professional Summary</Text>
-        <Text style={styles.text}>{data.profileOptimization.summary}</Text>
-
-        <Text style={styles.subheading}>Keywords to Include</Text>
-        <View style={styles.tagContainer}>
-          {data.profileOptimization.keywords.map((keyword: string, index: number) => (
-            <Text key={index} style={styles.tag}>{keyword}</Text>
-          ))}
-        </View>
-      </View>
-
-      <View style={styles.section}>
-        <Text style={styles.heading}>Lead Generation Strategy</Text>
-        <Text style={styles.subheading}>Portfolio Elements</Text>
-        <View style={styles.list}>
-          {data.leadGeneration.portfolio.sections.map((section: string, index: number) => (
-            <Text key={index} style={styles.listItem}>• {section}</Text>
-          ))}
         </View>
 
-        <Text style={styles.subheading}>Networking Strategy</Text>
-        <View style={styles.list}>
-          {data.leadGeneration.networking.strategies.map((strategy: string, index: number) => (
-            <Text key={index} style={styles.listItem}>• {strategy}</Text>
-          ))}
+        <View style={styles.section}>
+          <Text style={styles.heading}>Lead Generation Strategy</Text>
+          <Text style={styles.subheading}>Portfolio Elements</Text>
+          <View style={styles.list}>
+            {data.leadGeneration.portfolio.sections.map((section: string, index: number) => (
+              <Text key={index} style={styles.listItem}>• {section}</Text>
+            ))}
+          </View>
+
+          <Text style={styles.subheading}>Networking Strategy</Text>
+          <View style={styles.list}>
+            {data.leadGeneration.networking.strategies.map((strategy: string, index: number) => (
+              <Text key={index} style={styles.listItem}>• {strategy}</Text>
+            ))}
+          </View>
         </View>
-      </View>
-    </Page>
-  </Document>
-);
+      </Page>
+    </Document>
+  );
+
+  return MyDocument;
+};
+
+export const generatePDF = async (data: any) => {
+  return await pdf(BrandingGuidelinePDF({ data })).toBlob();
+};
 
 export default BrandingGuidelinePDF;
