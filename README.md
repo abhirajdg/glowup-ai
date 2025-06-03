@@ -1,4 +1,4 @@
-# 🌟 GlowUp.AI — AI-Powered Job-Readiness Suite
+# 🌟 GlowUp.AI — AI-Powered Career Guru
 
 > From “who dis?” to “you’re hired.”  
 > ✨ AI-powered personal branding, portfolios, résumés, and interview prep — all in one place.
