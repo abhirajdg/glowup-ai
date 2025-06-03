@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Github, Linkedin, Sparkles } from 'lucide-react';
+import { Github, Twitter, Linkedin, Sparkles } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
@@ -18,20 +18,13 @@ const Footer: React.FC = () => {
               ✨ From 'who dis?' to 'you're hired' - Your AI-powered career glow up starts here.
             </p>
             <div className="flex space-x-4">
-              <a 
-                href="https://github.com/abhirajdg/glowup-ai" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-gray-400 hover:text-accent-lime transition-colors"
-              >
+              <a href="#" className="text-gray-400 hover:text-accent-lime transition-colors">
                 <Github size={20} />
               </a>
-              <a 
-                href="https://www.linkedin.com/in/abhirajdg" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-gray-400 hover:text-accent-lime transition-colors"
-              >
+              <a href="#" className="text-gray-400 hover:text-accent-lime transition-colors">
+                <Twitter size={20} />
+              </a>
+              <a href="#" className="text-gray-400 hover:text-accent-lime transition-colors">
                 <Linkedin size={20} />
               </a>
             </div>
