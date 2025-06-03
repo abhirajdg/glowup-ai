@@ -12,12 +12,14 @@ import {
   CheckCircle,
   Code,
   Brain,
-  Loader
+  Loader,
+  Download
 } from 'lucide-react';
 import Button from '../components/ui/Button';
 import Card, { CardHeader, CardContent } from '../components/ui/Card';
 import { InterviewQuestion, InterviewFeedback } from '../types';
 import { conductMockInterview } from '../lib/openai';
+import { generateInterviewPDF } from '../components/interviews/InterviewFeedbackPDF';
 
 const Interviews: React.FC = () => {
   const [isInterviewActive, setIsInterviewActive] = useState(false);
@@ -322,6 +324,25 @@ const Interviews: React.FC = () => {
   const renderInterviewSession = () => {
     const currentQuestion = getCurrentQuestions()[currentQuestionIndex];
     
+    const handleDownloadFeedback = async () => {
+      if (!feedback) return;
+      
+      const blob = await generateInterviewPDF(
+        feedback,
+        currentQuestion.question,
+        selectedTrack || '',
+        selectedLevel || ''
+      );
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `interview-feedback-${selectedTrack}-${selectedLevel}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    };
+
     return (
       <div className="max-w-4xl mx-auto">
         <Card>
@@ -417,7 +438,17 @@ const Interviews: React.FC = () => {
 
             {feedback && (
               <div className="mt-8 space-y-4">
-                <h3 className="font-medium">Feedback on Previous Answer</h3>
+                <div className="flex justify-between items-center">
+                  <h3 className="font-medium">Feedback on Previous Answer</h3>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    icon={<Download size={16} />}
+                    onClick={handleDownloadFeedback}
+                  >
+                    Download Feedback
+                  </Button>
+                </div>
                 <div className="bg-gray-50 p-6 rounded-lg space-y-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
